@@ -34,7 +34,7 @@ func main() {
 		}
 
 		// Some validation
-		if strings.Index(details.Email, "/") == -1 {
+		if strings.Index(details.Email, "@") != -1 {
 			tmpl.Execute(w, struct{ Success bool }{Success: true})
 		} else {
 			tmpl.Execute(w, struct{ Success bool }{Success: false})
