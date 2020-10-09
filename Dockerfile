@@ -1,4 +1,4 @@
-FROM golang
+FROM golang:latest
 WORKDIR /usr/local/app
 RUN apt update && apt full-upgrade -y
 COPY . .
