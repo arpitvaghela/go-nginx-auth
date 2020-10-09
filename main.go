@@ -3,8 +3,11 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"strings"
+
+	"golang.org/x/net/http2"
 )
 
 type ContactDetails struct {
@@ -38,7 +41,7 @@ func main() {
 		}
 	})
 
-	s.ListenAndServe()
-	// http2.ConfigureServer(s, &http2.Server{})
-	// s.ListenAndServeTLS("deploy/cert.pem", "deploy/key.pem")
+	// s.ListenAndServe()
+	http2.ConfigureServer(s, &http2.Server{})
+	log.Fatal(s.ListenAndServeTLS("deploy/cert.pem", "deploy/key.pem"))
 }
