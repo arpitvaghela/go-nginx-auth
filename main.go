@@ -2,12 +2,12 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strings"
-
-	"golang.org/x/net/http2"
 )
 
 type ContactDetails struct {
@@ -16,9 +16,16 @@ type ContactDetails struct {
 }
 
 func main() {
+	var port string
+
+	if len(os.Args) > 1 {
+		port = "localhost:" + os.Args[1]
+	} else {
+		port = "localhost:8080"
+	}
 	tmpl := template.Must(template.ParseFiles("forms.html"))
 	s := &http.Server{
-		Addr:    ":8080",
+		Addr:    port,
 		Handler: nil,
 	}
 
@@ -42,6 +49,6 @@ func main() {
 	})
 
 	// s.ListenAndServe()
-	http2.ConfigureServer(s, &http2.Server{})
+	fmt.Println("Running Server on ", "https://"+s.Addr)
 	log.Fatal(s.ListenAndServeTLS("deploy/cert.pem", "deploy/key.pem"))
 }
